@@ -20,12 +20,13 @@ app.listen(3000, () =>
 
 // Create a connection to the MySQL database
 // Replace the credentials below with your own database details
+// TODO: Replace the placeholder values below with your own MySQL database credentials
 const db = await mysql.createConnection({
-  host: '5.189.183.23', // Database server address
-  port: 4567,           // Database port
-  user: 'dm24-hbg-grupp8', // Database username
-  password: 'HYRNK71837',  // Database password
-  database: 'dm24-hbg-grupp8' // Database name
+  host: 'your-database-host',
+  port: your-database-port, // or your database port
+  user: 'your-database-username',
+  password: 'your-database-password',
+  database: 'your-database-name'
 });
 
 // Helper function to run a SQL query with optional values
