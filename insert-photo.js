@@ -65,12 +65,13 @@ import mysql from 'mysql2/promise';
 
 // Create a connection to the MySQL database using your credentials
 // This connection object (db) will be used to run queries
+// TODO: Replace the following database credentials with your own
 const db = await mysql.createConnection({
-    host:'5.189.183.23', // The IP address of your MySQL server
-    port: 4567, // The port number for MySQL
-    user: 'dm24-hbg-grupp8', // Your database username
-    password: 'HYRNK71837', // Your database password
-    database: 'dm24-hbg-grupp8' // The name of the database to use
+  host: 'YOUR_HOST',      // e.g., 'localhost' or your MySQL server IP
+  port: YOUR_PORT,             // e.g., 3306 (default MySQL port)
+  user: 'YOUR_USERNAME',  // Your MySQL username
+  password: 'YOUR_PASSWORD', // Your MySQL password
+  database: 'YOUR_DATABASE'  // The name of your database
 });
 
 // Define a helper function to run SQL queries on the database
