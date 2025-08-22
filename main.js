@@ -1,29 +1,34 @@
-// Declare a new function named start
+
+// This function will run our main program logic
+// It is marked as 'async' so we can use 'await' for asynchronous operations
 async function start() {
-    // read json
+    // Fetch the JSON file from the server (asynchronously)
+    // 'fetch' returns a promise that resolves to a response object
     let rawData = await fetch('many-people.json');
 
-    // convert json to a javascript data structure
+    // Convert the response to a JavaScript object (array of people)
+    // The .json() method also returns a promise
     let persons = await rawData.json();
 
-    // create a variable name that initially is an empty string
+    // Create an empty string to build up our HTML content
     let html = "";
-    // loop through persons
+
+    // Loop through each person in the array
+    // For each person, add a section of HTML with their name and age
     for (let person of persons) {
         html += `
-                <section>
-                    <h4>${person.firstname} är ${person.age}år gammal</h4>
-                </section>
-                `;
+            <section>
+                <h4>${person.firstname} är ${person.age} år gammal</h4>
+            </section>
+        `;
     }
 
-    // Add the content of the html variable
-    // to the html inside the body tag
+    // Insert the generated HTML into the web page
+    // This adds our new content to the end of the <body>
     document.body.innerHTML += html;
 }
 
-// Call the function start in order to run
-// the code written inside the start function
-
+// Call the start function to begin the program
+// This will execute all the code inside start()
 start();
 
