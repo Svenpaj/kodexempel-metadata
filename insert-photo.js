@@ -1,16 +1,16 @@
 
-
-// Array of metadata objects and filenames
+// Define an array of photo objects, each with a filename and metadata
+// The metadata contains information about the photo, such as who uploaded it, when, tags, dimensions, file size, and camera info
 const photos = [
   {
     filename: "photo_2025_08_20.jpg",
     metadata: {
-      uploadedBy: "svenpaj",
-      uploadDate: "2025-08-20T14:00:00Z",
-      tags: ["vacation", "beach", "family"],
-      dimensions: { width: 1920, height: 1080 },
-      sizeBytes: 2048000,
-      camera: { make: "Canon", model: "EOS 80D" }
+      uploadedBy: "svenpaj", // Who uploaded the photo
+      uploadDate: "2025-08-20T14:00:00Z", // When it was uploaded (ISO format)
+      tags: ["vacation", "beach", "family"], // Tags describing the photo
+      dimensions: { width: 1920, height: 1080 }, // Image width and height in pixels
+      sizeBytes: 2048000, // File size in bytes
+      camera: { make: "Canon", model: "EOS 80D" } // Camera make and model
     }
   },
   {
@@ -60,35 +60,39 @@ const photos = [
 ];
 
 
-  // Import the database driver
+// Import the MySQL database driver that supports promises (async/await)
 import mysql from 'mysql2/promise';
 
-// Create a connection 'db' to the database
+// Create a connection to the MySQL database using your credentials
+// This connection object (db) will be used to run queries
 const db = await mysql.createConnection({
-    host:'5.189.183.23', 
-    port: 4567,
-    user: 'dm24-hbg-grupp8', 
-    password: 'HYRNK71837',
-    database: 'dm24-hbg-grupp8'
+    host:'5.189.183.23', // The IP address of your MySQL server
+    port: 4567, // The port number for MySQL
+    user: 'dm24-hbg-grupp8', // Your database username
+    password: 'HYRNK71837', // Your database password
+    database: 'dm24-hbg-grupp8' // The name of the database to use
 });
 
-// A small function for a query
+// Define a helper function to run SQL queries on the database
+// It takes a SQL string and returns the result rows
 async function query(sql){
-    let result = await db.execute(sql);
-    return result[0];
- }
+    let result = await db.execute(sql); // db.execute returns [rows, fields]
+    return result[0]; // We only need the rows
+}
 
-
-// Insert all photos into the database
+// Loop through each photo in the array and insert it into the database
 for (const photo of photos) {
+  // Convert the metadata object to a JSON string for storage in the database
   const jsonString = JSON.stringify(photo.metadata);
+  // Insert the filename and JSON metadata into the jsontest table
   let [result] = await db.execute(
     'INSERT INTO jsontest (filename, description) VALUES (?, ?)',
     [photo.filename, jsonString]
   );
+  // Print a message to the console for each inserted photo
   console.log(`Inserted: ${photo.filename}`, result);
 }
 
-
+// Close the database connection when done
 await db.end();
 
